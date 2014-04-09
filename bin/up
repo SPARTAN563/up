@@ -45,7 +45,7 @@ program
   .option('-t, --timeout [ms]', 'Worker timeout.')
   .option('-k, --keepalive', 'Restart failed workers.')
   .option('-m, --manual-ready', 'Manual call require("up").ready() in code.')
-  .option('-A', '--allocator <regex>', 'The request allocator, either socket.io, sockjs or a Regex who\'s first group is the session ID')
+  .option('-A, --allocator <regex>', 'The request allocator, either socket.io, sockjs or a Regex who\'s first group is the session ID', 'socket.io')
 
 /**
  * Capture requires.

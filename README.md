@@ -96,7 +96,7 @@ The `up` command accepts the following options:
   - Defaults to `up`.
   - The value will be appended with `master` or `worker` (e.g "up master", "up worker").
 
-- '-A'/'--allocator'
+- `-A`/`--allocator`
 
   - A choice between `socket.io` and `sockjs` or a `Regex`
   - Defaults to `socket.io`
