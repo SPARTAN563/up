@@ -9,24 +9,15 @@ var express = require('express')
  * Initialize server
  */
 
-var app = express.createServer();
+var app = express();
 
 /**
  * Default route.
  */
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
   res.send({ pid: process.pid, title: process.title });
 });
-
-/**
- * Socket.io mock route.
- */
-
-app.get('/socket.io/*', function (req, res) {
-  res.send({ pid: process.pid });
-});
-
 
 /**
  * Exports.

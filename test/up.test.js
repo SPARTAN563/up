@@ -175,6 +175,10 @@ describe('up', function () {
     // will send us the pid over a net channel
     net.createServer(function (conn) {
       conn.setEncoding('utf8');
+      conn.on('error', function(err) {
+        expect(err.code).to.be('ECONNRESET');
+      });
+
       conn.on('data', function (pid) {
         expect(alive(pid)).to.be(true);
 
