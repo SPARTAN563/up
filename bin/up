@@ -168,6 +168,7 @@ var httpServer = http.Server().listen(program.port)
       , title: program.title
       , keepAlive: keepAlive
       , assumeReady: !program.manualReady
+      , allocator: allocator
     })
 
 /**
