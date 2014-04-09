@@ -1,4 +1,3 @@
-
 # Up
 
 Zero-downtime reloads built on top of the
@@ -24,6 +23,7 @@ when files change in the working directory.
 - Gracefully handles reloads with syntax errors during development.
 - Built on [distribute](http://github.com/learnboost/distribute).
 - Supports transpilers such as CoffeeScript.
+- Supports Socket.IO and SockJS (as well as other frameworks with session-unique URLs)
 
 ## Setup
 
@@ -96,6 +96,12 @@ The `up` command accepts the following options:
   - Defaults to `up`.
   - The value will be appended with `master` or `worker` (e.g "up master", "up worker").
 
+- '-A'/'--allocator'
+
+  - A choice between `socket.io` and `sockjs` or a `Regex`
+  - Defaults to `socket.io`
+  - Regex values should have their first group contain the server specific ID, or session ID
+
 ### B) JavaScript API
 
 ```js
@@ -124,6 +130,9 @@ parameters:
   - `minExpectedLifetime`: (`Number`|`String`): Number of ms a worker is
     expected to live. Don't auto-respawn if a worker dies earlier. Strings
     like `'10s'` are accepted. Defaults to `'20s'`.
+  - `allocator` : (`String`|`RegExp`): Either one of [`socket.io`, `sockjs`]
+    or a regex who's first group returns the server ID to direct the request
+    to (just needs to be a fixed ID for that session).
 
 ## Middleware
 
@@ -179,6 +188,32 @@ var up = require('up');
 setTimeout(function(){
 	up.ready();
 }, 1000);
+```
+
+### Request Allocation
+
+In the interest of making `up` compatible with as many libraries and routing
+strategies as possible - we've provided a means to change the fixed allocation
+logic used by it. In most cases requests are allocated round-robbin style, but
+in some situations it is necessary to ensure that certain requests always go
+to the same server - for example, when using WebSockets.
+
+To achieve this, simply specify the `--allocator` option and provide a Regular
+Expression which selects (as its first matching group) the session or relative
+server ID to route requests to.
+
+```bash
+$ up --allocator "^/server(\\d+)/.*" --port 80 my-http-server.js
+```
+
+There are a number of built-in allocators which can be referred to by name:
+
+ - `socket.io` provides a Socket.IO compatible allocator.
+ - `sockjs` provides an eager SockJS compatible allocator - we recommend you
+   create your own for large scale systems.
+
+```bash
+$ up --allocator sockjs --port 80 my-http-server.js
 ```
 
 ## Credits

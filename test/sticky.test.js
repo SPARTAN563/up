@@ -47,6 +47,28 @@ describe('sticky', function () {
     }
   });
 
+  it('should make xhr-polling sockjs workers sticky', function (done) {
+    var httpServer = http.Server().listen(6012, onListen)
+      , srv = up(httpServer, __dirname + '/server', { numWorkers: 2, allocator: 'sockjs' })
+      , url = 'http://localhost:6012/io/1/123/xhr_polling?t=123';
+
+    function onListen (err) {
+      if (err) return done(err);
+      srv.on('spawn', onSpawn(srv, url, done));
+    }
+  });
+
+  it('should make custom allocator workers sticky', function (done) {
+    var httpServer = http.Server().listen(6013, onListen)
+      , srv = up(httpServer, __dirname + '/server', { numWorkers: 2, allocator: '^/server(\\d+)/.*' })
+      , url = 'http://localhost:6013/server1/path?t=123';
+
+    function onListen (err) {
+      if (err) return done(err);
+      srv.on('spawn', onSpawn(srv, url, done));
+    }
+  });
+
   function onSpawn (srv, url, done) {
     return  function () {
       // count workers
