@@ -10,7 +10,7 @@
     "restart"
   ],
   "homepage": "https://github.com/learnboost/up",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "bin": {
     "up": "./bin/up"
   },
@@ -32,6 +32,6 @@
     "superagent": "*"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/*.test.js"
+    "test": "mocha test/*.test.js"
   }
 }
