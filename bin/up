@@ -158,7 +158,7 @@ var allocator = program.allocator;
 debug('starting cluster with %d workers on port %d', numWorkers, port);
 debug('`\033[97mkill -s SIGUSR2 %d\033[90m` or'
   + '`\033[97mkill -s SIGHUP %d\033[90m` or \033[97mctrl + r\033[90m'
-  + ' to load new code', process.pid);
+  + ' to load new code', process.pid, process.pid);
 
 var httpServer = http.Server().listen(program.port)
   , srv = up(httpServer, file, {
