@@ -1,3 +1,7 @@
+0.2.6 / 2014-04-16
+==================
+
+  * Added customizable allocation logic to allow for support of SockJS, Primus etc.
 
 0.2.1 / 2012-06-25
 ==================

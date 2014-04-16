@@ -16,6 +16,7 @@ var app = express();
  */
 
 app.get('*', function (req, res) {
+  res.cookie('pid', process.pid);
   res.send({ pid: process.pid, title: process.title });
 });
 

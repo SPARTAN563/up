@@ -98,8 +98,8 @@ The `up` command accepts the following options:
 
 - `-A`/`--allocator`
 
-  - A choice between `socket.io` and `sockjs` or a `Regex`
-  - Defaults to `socket.io`
+  - A choice between `socket.io`, `sockjs`, `cookie` or a `Regex`
+  - Defaults to `cookie`
   - Regex values should have their first group contain the server specific ID, or session ID
 
 ### B) JavaScript API
@@ -211,6 +211,10 @@ There are a number of built-in allocators which can be referred to by name:
  - `socket.io` provides a Socket.IO compatible allocator.
  - `sockjs` provides an eager SockJS compatible allocator - we recommend you
    create your own for large scale systems.
+ - `cookie` automatically assigns a session specific `_up` cookie which is used
+   to provide request routing for that user for the duration of their session.
+   It is compatible with `primus` and should work with any transport which passes
+   cookies for requests.
 
 ```bash
 $ up --allocator sockjs --port 80 my-http-server.js
